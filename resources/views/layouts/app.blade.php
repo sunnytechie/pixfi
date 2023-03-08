@@ -91,7 +91,7 @@
                     <a class="nav-link" href="#" style="color: #fff">Join</a>
                   </li>
                   <li class="nav-item">
-                    <button type="button" class="nav-link nav-link-upload border-0 btn px-3 ms-3" data-bs-toggle="modal" data-bs-target="#uploadModal" style="color: #fff; background: #14BC7D; border-radius: 50px">Upload</button>
+                    <a href="/upload" class="nav-link nav-link-upload border-0 btn px-3 ms-3" style="color: #fff; background: #14BC7D; border-radius: 50px">Upload</a>
                   </li>
                 </ul>
               </div>
@@ -103,7 +103,7 @@
         <div class="header" style="background-image: url('https://cdn.pixabay.com/photo/2018/01/24/19/49/people-3104635_960_720.jpg'); height: 68vh; background-position: center; background-repeat: no-repeat; background-size: cover; opacity: 1; background-color: rgba(0, 0, 0, 0.5);">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-8 offset-md-2">
+                    <div class="col-md-8 offset-md-2 hide-from-others">
                         <div class="spacer" style="height: 45vh"></div>
                         <form class="d-flex py-2 justify-content-center align-items-center" style="background: #FFFFFF; border-radius: 100px">
                             <button class="border-0" type="submit" style="background: #FFF; margin-top: 4px"><ion-icon name="search"></ion-icon></button>
@@ -130,7 +130,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-7">
-                        <h3 style="font-size: 25px; font-weight:600">Pixfi</h3>
+                        <h3 class="navbar-brand" style="font-size: 25px; font-weight:600">Pixfi</h3>
                         <p>Store software for only Sisters Fellowship International.</p>
 
                         <div class="d-flex">

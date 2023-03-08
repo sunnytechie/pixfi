@@ -31,17 +31,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-             <form action="#" method="POST" class="dropzone" enctype="multipart/form-data">
-                @csrf
-                <div class="form-group">
-                    <label for="title">Title</label>
-                    <input type="text" class="form-control" id="title" name="title" required>
-                </div>
-                <div class="form-group">
-                    <label for="pictures">Pictures</label>
-                    <div class="dropzone" id="myDropzone"></div>
-                </div>
-             </form>
+             
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary border-0" data-bs-dismiss="modal">Close</button>

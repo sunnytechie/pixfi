@@ -22,13 +22,13 @@
 
         {{-- favicon --}}
         <link rel="icon" href="https://sfiloveinaction.org/wp-content/uploads/2022/07/cropped-SFI-Logo.png">
-
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   
         <!-- Bootstrap Icons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.2/bootstrap-icons.min.css">
-        {{-- Dropzone --}}
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.min.css" integrity="sha512-v6U9bYjCXz+TppwJhLBy6SRRJ8/od0Kyv1bbp0x+oINP8G02WgBv7jK52yOFOf2r75dR1aSl2l5oZ+C5jVmyeA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/css/dropify.min.css">
+        
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Style+Script&display=swap');
 
@@ -75,7 +75,7 @@
 		<!-- NAVIGATION -->
         <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-transparent">
             <div class="container">
-              <a class="navbar-brand" href="#" style="color: #fff">Pixfi</a>
+              <a class="navbar-brand" href="/" style="color: #fff">Pixfi</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -91,7 +91,7 @@
                     <a class="nav-link" href="#" style="color: #fff">Join</a>
                   </li>
                   <li class="nav-item">
-                    <a href="/upload" class="nav-link nav-link-upload border-0 btn px-3 ms-3" style="color: #fff; background: #14BC7D; border-radius: 50px">Upload</a>
+                    <a href="{{ route('image.create') }}" class="nav-link nav-link-upload border-0 btn px-3 ms-3" style="color: #fff; background: #14BC7D; border-radius: 50px">Upload</a>
                   </li>
                 </ul>
               </div>
@@ -109,10 +109,8 @@
                             <button class="border-0" type="submit" style="background: #FFF; margin-top: 4px"><ion-icon name="search"></ion-icon></button>
                             <input type="text" class="form-control border-0" placeholder="Search" aria-label="Search" style="width: 70%; box-shadow: none;">
                             <select class="form-select btn btn-light category-btn border-0 me-2" aria-label="Category" style="width: 20%;">
-                                <option selected>Category</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
+                                <option value="music" selected>Music</option>
+                                <option value="video">Videos</option>
                             </select>                     
                             
                         </form>
@@ -173,12 +171,59 @@
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
-        <!-- jQuery Plugins -->
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-        {{-- Dropzone --}}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/min/dropzone.min.js" integrity="sha512-CWkSZewynvZfjKZCE9iee8WlGJnVn0f1cQRrQ6KPKU6ihG/l6N1Z6DF9U6bKTTsc0vTJw/0oUCPzKmz0o3OeOQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/js/dropify.min.js"></scrip
+        
+        <script>
+            $(document).ready(function() {
+            $('.dropify').dropify({
+                messages: {
+                'default': 'Drag and drop a file here or click',
+                'replace': 'Drag and drop or click to replace',
+                'remove':  'Remove',
+                'error':   'Ooops, something wrong happended.'
+                }
+            });
+            });
+        </script>
+    
+        <script>
+            $(document).ready(function(){
+                // Basic
+                $('.dropify').dropify();
+                // Translated
+                $('.dropify-fr').dropify({
+                    messages: {
+                        'default': 'Drag and drop a file here or click',
+                        'replace': 'Drag and drop or click to replace',
+                        'remove':  'Remove',
+                        'error':   'Ooops, something wrong happended.'
+                    }
+                });
+                // Used events
+                var drEvent = $('#input-file-events').dropify();
+                drEvent.on('dropify.beforeClear', function(event, element){
+                    return confirm("Do you really want to delete \"" + element.file.name + "\" ?");
+                });
+                drEvent.on('dropify.afterClear', function(event, element){
+                    alert('File deleted');
+                });
+                drEvent.on('dropify.errors', function(event, element){
+                    console.log('Has Errors');
+                });
+                var drDestroy = $('#input-file-to-destroy').dropify();
+                drDestroy = drDestroy.data('dropify')
+                $('#toggleDropify').on('click', function(e){
+                    e.preventDefault();
+                    if (drDestroy.isDropified()) {
+                        drDestroy.destroy();
+                    } else {
+                        drDestroy.init();
+                    }
+                })
+            });
+        </script>        
 
         <script>
             $(document).ready(function() {

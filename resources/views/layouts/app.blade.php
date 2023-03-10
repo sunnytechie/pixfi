@@ -125,8 +125,8 @@
                           </li>
                         </ul>
                     </li>
-                      <li class="nav-item">
-                        <button type="button" class="nav-link nav-link-upload border-0 btn px-3 ms-3" style="color: #fff; background: #14BC7D; border-radius: 50px; box-shadow: none;" data-bs-toggle="modal" data-bs-target="#exampleModal"><ion-icon name="cloud-upload-outline"></ion-icon> Upload</button>
+                      <li class="nav-item mt-1">
+                        <button type="button" class="nav-link nav-link-upload border-0 btn px-3 ms-3" style="color: #fff; background: #14BC7D; border-radius: 50px; box-shadow: none;" data-bs-toggle="modal" data-bs-target="#exampleModal"><img height="20" width="20" style="fill: #FFF" src="{{ asset('images/ionicons.designerpack/cloud-upload-sharp.svg') }}" alt=""> Upload</button>
                       </li>
                   @endguest
                   

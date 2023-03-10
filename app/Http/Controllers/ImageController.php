@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use cloudinary;
 use App\Models\Post;
-use App\Models\Picture;
 //use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use App\Models\Picture;
 use Illuminate\Http\Request;
 
 
@@ -21,7 +22,7 @@ class ImageController extends Controller
         $imageName = $image->getClientOriginalName();
         $image->move(public_path('images'),$imageName);
 
-        //$response = cloudinary()->upload($request->file('file')->getRealPath())->getSecurePath();
+        $response = cloudinary()->upload($request->file('file')->getRealPath())->getSecurePath();
          
         $imageUpload = new Picture();
         $imageUpload->post_id = $request->post_id;

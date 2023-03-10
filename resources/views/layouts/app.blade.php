@@ -26,8 +26,15 @@
         <!-- Bootstrap Icons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.2/bootstrap-icons.min.css">
         
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/css/dropify.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.0/dropzone.min.css">
+        
+        <!-- Bootstrap 5.0.2 JS CDN -->
+        <!-- JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.min.js"></script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.0/dropzone.js"></script>
         
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Style+Script&display=swap');
@@ -68,12 +75,15 @@
                     height: auto;
                     display: block;
                 }
+
+                .nav-item .dropdown-toggle::after {
+                    display: none;
+                }
         </style>
     </head>
     <body>
-   
 		<!-- NAVIGATION -->
-        <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-transparent">
+        <nav class="navbar navbar-expand-sm navbar-light fixed-top bg-transparent">
             <div class="container">
               <a class="navbar-brand" href="/" style="color: #fff">Pixfi</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,22 +91,50 @@
               </button>
               <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                  <li class="nav-item">
+                  <li class="nav-item mt-1">
                     <a class="nav-link" href="#" style="color: #fff">Explore</a>
                   </li>
-                  <li class="nav-item mx-2">
-                    <a class="nav-link" href="#" style="color: #fff">Login</a>
-                  </li>
-                  <li class="nav-item mx-2">
-                    <a class="nav-link" href="#" style="color: #fff">Join</a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="{{ route('image.create') }}" class="nav-link nav-link-upload border-0 btn px-3 ms-3" style="color: #fff; background: #14BC7D; border-radius: 50px">Upload</a>
-                  </li>
+                  @guest
+                        <li class="nav-item mt-1 mx-2">
+                            <a class="nav-link" href="{{ route('login') }}" style="color: #fff">Login</a>
+                        </li>
+                        <li class="nav-item mt-1 mx-2">
+                            <a class="nav-link" href="{{ route('register') }}" style="color: #fff">Join</a>
+                        </li>
+
+                      @else
+                    <li class="nav-item mx-1 dropdown">
+                        <a class="nav-link dropdown-toggle dropdown-toggle-no-caret" href="#" style="color: #fff; font-size: 25px" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <ion-icon name="person-circle"></ion-icon>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="">{{ Auth::user()->name }}</a></li>
+                            <li><a class="dropdown-item" href="mailto:sunnyict001@gmail.com">Feedback</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <!-- Authentication -->
+                          <form method="POST" action="{{ route('logout') }}">
+                              @csrf
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                                      this.closest('form').submit();">
+                              <i class="bx bx-power-off me-2"></i>
+                              <span class="align-middle">Log Out</span>
+                            </a>
+                          </form>
+                          </li>
+                        </ul>
+                    </li>
+                      <li class="nav-item">
+                        <button type="button" class="nav-link nav-link-upload border-0 btn px-3 ms-3" style="color: #fff; background: #14BC7D; border-radius: 50px; box-shadow: none;" data-bs-toggle="modal" data-bs-target="#exampleModal"><ion-icon name="cloud-upload-outline"></ion-icon> Upload</button>
+                      </li>
+                  @endguest
+                  
+                  
                 </ul>
               </div>
             </div>
-          </nav>
+        </nav>
 		<!-- /NAVIGATION -->
 
         {{-- Search Section --}}
@@ -122,7 +160,6 @@
         <main>
             @yield('content')
         </main>
-            
             
         <section style="border-top: 0.1rem solid #ddd; padding: 50px 0; margin-top: 40px; min-height: 50vh">
             <div class="container">
@@ -163,6 +200,38 @@
                 </div>
             </div>
         </section>
+
+        {{-- Modal section --}}
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Publish a post</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group mb-3">
+                            <label for="title">Title.</label>
+                            <input type="text" class="form-control rounded-0" name="title" value="{{ old('title') }}" placeholder="Give this post a title.">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Description your post.</label>
+                            <textarea class="form-control rounded-0" name="description" id="description" placeholder="Kindly make you tags and or descriptions." cols="10" rows="5">{{ old('description') }}</textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary rounded-0" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary rounded-0">Proceed</button>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+        {{-- End section --}}
+
         <footer style="background: #F7F7F7; padding: 20px">
             <p class="text-center text-black">This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply.</p>
         </footer>
@@ -171,59 +240,26 @@
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
-        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/js/dropify.min.js"></scrip
-        
-        <script>
-            $(document).ready(function() {
-            $('.dropify').dropify({
-                messages: {
-                'default': 'Drag and drop a file here or click',
-                'replace': 'Drag and drop or click to replace',
-                'remove':  'Remove',
-                'error':   'Ooops, something wrong happended.'
+        <script type="text/javascript">
+            Dropzone.options.dropzone =
+            {
+                maxFilesize: 12,
+                renameFile: function(file) {
+                    var dt = new Date();
+                    var time = dt.getTime();
+                    return time+file.name;
+                },
+                acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                addRemoveLinks: true,
+                timeout: 5000,
+                success: function(file, response) {
+                    console.log(response);
+                },
+                error: function(file, response){
+                    return false;
                 }
-            });
-            });
-        </script>
-    
-        <script>
-            $(document).ready(function(){
-                // Basic
-                $('.dropify').dropify();
-                // Translated
-                $('.dropify-fr').dropify({
-                    messages: {
-                        'default': 'Drag and drop a file here or click',
-                        'replace': 'Drag and drop or click to replace',
-                        'remove':  'Remove',
-                        'error':   'Ooops, something wrong happended.'
-                    }
-                });
-                // Used events
-                var drEvent = $('#input-file-events').dropify();
-                drEvent.on('dropify.beforeClear', function(event, element){
-                    return confirm("Do you really want to delete \"" + element.file.name + "\" ?");
-                });
-                drEvent.on('dropify.afterClear', function(event, element){
-                    alert('File deleted');
-                });
-                drEvent.on('dropify.errors', function(event, element){
-                    console.log('Has Errors');
-                });
-                var drDestroy = $('#input-file-to-destroy').dropify();
-                drDestroy = drDestroy.data('dropify')
-                $('#toggleDropify').on('click', function(e){
-                    e.preventDefault();
-                    if (drDestroy.isDropified()) {
-                        drDestroy.destroy();
-                    } else {
-                        drDestroy.init();
-                    }
-                })
-            });
-        </script>        
+            };
+        </script>       
 
         <script>
             $(document).ready(function() {
@@ -232,16 +268,19 @@
                     if (scroll > 50) {
                         $("nav").removeClass("bg-transparent");
                         $("nav").addClass("bg-white");
+                        $("nav").addClass("shadow-sm");
                         $(".nav-link").css("color", "black");
                         $(".navbar-brand").css("color", "black");
                     } else {
                         $("nav").removeClass("bg-white");
+                        $("nav").removeClass("shadow-sm");
                         $("nav").addClass("bg-transparent");
                         $(".nav-link").css("color", "white");
                         $(".navbar-brand").css("color", "white");
                     }
                 });
             });
-            </script>
-    </body>
+        </script>
+
+</body>
 </html>

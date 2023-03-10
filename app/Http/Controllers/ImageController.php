@@ -2,33 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Image;
+use App\Models\Post;
+use App\Models\Picture;
+//use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
+
 
 class ImageController extends Controller
 {
-    public function upload(Request $request) {
-        dd('welcome here');
-    $filenames = [];
-    
-    if ($request->hasFile('images')) {
-        foreach ($request->file('images') as $index => $file) {
-            $filename = time() . '-' . $file->getClientOriginalName();
-            $path = $file->storeAs('public/images', $filename);
-            
-            $image = new Image();
-            $image->title = $request->input('titles')[$index];
-            $image->description = $request->input('descriptions')[$index];
-            $image->filename = $filename;
-            $image->save();
-            
-            $filenames[] = $filename;
-        }
-        
-        return response()->json(['success' => true, 'filenames' => $filenames]);
-    } else {
-        return response()->json(['success' => false, 'message' => 'No file uploaded']);
+    public function create($post) {
+        $post = Post::find($post);
+        return view('image.new', compact('post'));
     }
-}
+
+    public function dropzoneUploadStore(Request $request) {
+        $image = $request->file('file');
+
+        $imageName = $image->getClientOriginalName();
+        $image->move(public_path('images'),$imageName);
+
+        //$response = cloudinary()->upload($request->file('file')->getRealPath())->getSecurePath();
+         
+        $imageUpload = new Picture();
+        $imageUpload->post_id = $request->post_id;
+        $imageUpload->picture = $imageName;
+        $imageUpload->save();
+        return response()->json(['success'=>$imageName]);
+    }
+
+    public function show($id) {
+        $image = Picture::find($id);
+        $post = Post::find($image->post_id);
+        //dd($post);
+        return view('image.show', compact('post', 'image'));
+    }
 
 }

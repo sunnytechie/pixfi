@@ -7,6 +7,8 @@ use App\Models\Post;
 //use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use App\Models\Picture;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
+
 
 
 class ImageController extends Controller
@@ -19,10 +21,17 @@ class ImageController extends Controller
     public function dropzoneUploadStore(Request $request) {
         $image = $request->file('file');
 
-        $imageName = $image->getClientOriginalName();
-        $image->move(public_path('images'),$imageName);
+        //Saving to public folder
+        //$imageName = $image->getClientOriginalName();
+        //$image->move(public_path('images'),$imageName);
 
+        //Saving to Cloudinary
         //$response = cloudinary()->upload($request->file('file')->getRealPath())->getSecurePath();
+
+        //Saving to storage with Image Intervention
+        $imageName = request('file')->store('images', 'public');
+        $image = Image::make(public_path("storage/{$imageName}"));
+        $image->save();
          
         $imageUpload = new Picture();
         $imageUpload->post_id = $request->post_id;

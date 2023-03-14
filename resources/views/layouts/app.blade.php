@@ -153,10 +153,12 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 offset-md-2 hide-from-others">
-                        <div class="spacer" style="height: 45vh"></div>
+                        
+                        <div class="spacer remove-spacer" style="height: 45vh"></div>
+
                         <form class="d-flex py-2 justify-content-center align-items-center" style="background: #FFFFFF; border-radius: 100px" action="{{ route('search') }}" method="get">
                             <button class="border-0" type="submit" style="background: #FFF; margin-top: 4px"><ion-icon name="search"></ion-icon></button>
-                            <input type="text" class="form-control border-0" name="query" placeholder="Search" aria-label="Search" style="width: 70%; box-shadow: none;">
+                            <input type="text" class="form-control border-0" name="query" placeholder="Search" aria-label="Search" value="{{  request('query') }}" style="width: 70%; box-shadow: none;">
                             <select class="form-select btn btn-light category-btn border-0 me-2" aria-label="Category" name="category" style="width: 20%;">
                                 <option value="image" selected>Images</option>
                                 <option value="video">Videos</option>

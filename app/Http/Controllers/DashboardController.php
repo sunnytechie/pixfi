@@ -19,10 +19,13 @@ class DashboardController extends Controller
 
     public function search(Request $request)
     {
+        
         $request->validate([
             'query' => 'required|min:1',
             'category' => '',
         ]);
+
+        $searchQuery = $request->query;
 
         //dd($request->all());
 
@@ -40,7 +43,7 @@ class DashboardController extends Controller
 
         //dd($posts);
 
-        return view('search', compact('posts'));
+        return view('search', compact('posts', 'searchQuery'));
     }
 
     

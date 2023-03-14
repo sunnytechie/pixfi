@@ -92,8 +92,8 @@
                         </div>
         
         
-                        <div class="mb-4 d-flex justify-content-end">
-                            <button class="btn btn-success rounded-0 d-grid w-50" type="submit">Sign in</button>
+                        <div class="mb-4 d-flex justify-content-center">
+                            <button class="btn btn-success rounded-0 d-grid w-100" type="submit">Sign in</button>
                         </div>
         
                         {{-- <div class="mb-3">

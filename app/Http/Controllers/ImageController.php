@@ -22,7 +22,7 @@ class ImageController extends Controller
         $imageName = $image->getClientOriginalName();
         $image->move(public_path('images'),$imageName);
 
-        $response = cloudinary()->upload($request->file('file')->getRealPath())->getSecurePath();
+        //$response = cloudinary()->upload($request->file('file')->getRealPath())->getSecurePath();
          
         $imageUpload = new Picture();
         $imageUpload->post_id = $request->post_id;

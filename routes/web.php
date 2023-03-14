@@ -23,6 +23,8 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/search', [DashboardController::class, 'search'])->name('search');
+
 //Route::post('/upload', [ImageController::class, 'upload'])->name('image.store')->middleware('auth', 'verified');
 //Route::post('/upload/delete', [ImageController::class, 'delete'])->name('image.destroy')->middleware('auth', 'verified');
 

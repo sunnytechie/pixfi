@@ -39,7 +39,7 @@
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Style+Script&display=swap');
 
-            body, p, li, a, ul, div, span, section, button, h1, h2, h3, h4, h5{
+            body, p, li, a, ul, div, span, section, button, h1, h2, h3, h4, h5, label{
                 font-family: 'Poppins', sans-serif;
                 font-size: 14px;
                 font-weight: 400px;
@@ -79,6 +79,17 @@
                 .nav-item .dropdown-toggle::after {
                     display: none;
                 }
+
+                input, textarea {
+                font-family: 'Poppins', sans-serif !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+                border: 2px solid #D1D5DB !important;
+            }
+
+            .modal input:active, .modal input:focus, .modal textarea:active, .modal textarea:focus {
+                border: 2px solid #6366F1 !important;
+            }
         </style>
     </head>
     <body>
@@ -125,13 +136,8 @@
                           </li>
                         </ul>
                     </li>
-<<<<<<< HEAD
                       <li class="nav-item">
                         <button type="button" class="nav-link nav-link-upload border-0 btn px-3 ms-3 mt-1" style="color: #fff; background: #14BC7D; border-radius: 50px; box-shadow: none;" data-bs-toggle="modal" data-bs-target="#exampleModal"><ion-icon name="cloud-upload-outline"></ion-icon> Upload</button>
-=======
-                      <li class="nav-item mt-1">
-                        <button type="button" class="nav-link nav-link-upload border-0 btn px-3 ms-3" style="color: #fff; background: #14BC7D; border-radius: 50px; box-shadow: none;" data-bs-toggle="modal" data-bs-target="#exampleModal"><img height="20" width="20" style="fill: #FFF" src="{{ asset('images/ionicons.designerpack/cloud-upload-sharp.svg') }}" alt=""> Upload</button>
->>>>>>> b13f904c302377fc0f2392e23281f819a1311b88
                       </li>
                   @endguest
                   
@@ -148,11 +154,11 @@
                 <div class="row">
                     <div class="col-md-8 offset-md-2 hide-from-others">
                         <div class="spacer" style="height: 45vh"></div>
-                        <form class="d-flex py-2 justify-content-center align-items-center" style="background: #FFFFFF; border-radius: 100px">
+                        <form class="d-flex py-2 justify-content-center align-items-center" style="background: #FFFFFF; border-radius: 100px" action="{{ route('search') }}" method="get">
                             <button class="border-0" type="submit" style="background: #FFF; margin-top: 4px"><ion-icon name="search"></ion-icon></button>
-                            <input type="text" class="form-control border-0" placeholder="Search" aria-label="Search" style="width: 70%; box-shadow: none;">
-                            <select class="form-select btn btn-light category-btn border-0 me-2" aria-label="Category" style="width: 20%;">
-                                <option value="music" selected>Music</option>
+                            <input type="text" class="form-control border-0" name="query" placeholder="Search" aria-label="Search" style="width: 70%; box-shadow: none;">
+                            <select class="form-select btn btn-light category-btn border-0 me-2" aria-label="Category" name="category" style="width: 20%;">
+                                <option value="image" selected>Images</option>
                                 <option value="video">Videos</option>
                             </select>                     
                             
@@ -237,6 +243,10 @@
         </div>
         {{-- End section --}}
 
+        <div id="scrollUp" class="btn btn-success" style="position: fixed; bottom: 20px; right: 20px; display: none;">
+            Scroll Up
+        </div>
+
         <footer style="background: #F7F7F7; padding: 20px">
             <p class="text-center text-black">This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply.</p>
         </footer>
@@ -285,6 +295,22 @@
                     }
                 });
             });
+        </script>
+
+        <script>
+            var myDiv = document.getElementById("scrollUp");
+
+            window.onscroll = function() {
+            if (window.scrollY > 400) {
+                myDiv.style.display = "block"; // Show the div
+            } else {
+                myDiv.style.display = "none"; // Hide the div
+            }
+            };
+
+            myDiv.onclick = function() {
+            window.scrollTo({top: 0, behavior: 'smooth'}); // Scroll to top
+            };
         </script>
 
 </body>

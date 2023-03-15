@@ -25,7 +25,7 @@
                 <div class="grid">
                     @foreach ($posts as $post)
                       @foreach ($post->pictures as $image)
-                          <div class="grid-item"><a href="{{ route('image.show', $image->id) }}"><img src="/storage/{{ $image->picture }}"></a></div>
+                          <div class="grid-item"><a href="{{ route('image.show', $image->id) }}"><img src="/images/{{ $image->picture }}"></a></div>
                       @endforeach
                     @endforeach
                 </div>

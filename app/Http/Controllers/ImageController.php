@@ -22,16 +22,16 @@ class ImageController extends Controller
         $image = $request->file('file');
 
         //Saving to public folder
-        //$imageName = $image->getClientOriginalName();
-        //$image->move(public_path('images'),$imageName);
+        $imageName = $image->getClientOriginalName();
+        $image->move(public_path('images'),$imageName);
 
         //Saving to Cloudinary
         //$response = cloudinary()->upload($request->file('file')->getRealPath())->getSecurePath();
 
         //Saving to storage with Image Intervention
-        $imageName = request('file')->store('images', 'public');
-        $image = Image::make(public_path("storage/{$imageName}"));
-        $image->save();
+        //$imageName = request('file')->store('images', 'public');
+        //$image = Image::make(public_path("storage/{$imageName}"));
+        //$image->save();
          
         $imageUpload = new Picture();
         $imageUpload->post_id = $request->post_id;

@@ -27,29 +27,33 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.2/bootstrap-icons.min.css">
         
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.0/dropzone.min.css">
+        {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.0/dropzone.min.css"> --}}
         
         <!-- Bootstrap 5.0.2 JS CDN -->
         <!-- JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.min.js"></script>
         
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.0/dropzone.js"></script>
-        
+        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.0/dropzone.js"></script> --}}
+
+        <!-- Dropify -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+
         <style>
-            @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Style+Script&display=swap');
+                @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Style+Script&display=swap');
 
-            body, p, li, a, ul, div, span, section, button, h1, h2, h3, h4, h5, label{
-                font-family: 'Poppins', sans-serif;
-                font-size: 14px;
-                font-weight: 400px;
-            }
+                body, p, li, a, ul, div, span, section, button, h1, h2, h3, h4, h5, label{
+                    font-family: 'Poppins', sans-serif;
+                    font-size: 14px;
+                    font-weight: 400px;
+                }
 
-            .navbar-brand {
-                font-family: 'Style Script', cursive;
-                font-size: 30px;
-            }
-            .category-btn:active, .category-btn:focus, .category-btn:hover {
+                .navbar-brand {
+                    font-family: 'Style Script', cursive;
+                    font-size: 30px;
+                }
+                .category-btn:active, .category-btn:focus, .category-btn:hover {
                     background:#F7F7F7 !important; border-radius: 100px; box-shadow: none !important; color: #000 !important;
                 }
 
@@ -259,7 +263,7 @@
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
-        <script type="text/javascript">
+        {{-- <script type="text/javascript">
             Dropzone.options.dropzone =
             {
                 maxFilesize: 12,
@@ -278,7 +282,9 @@
                     return false;
                 }
             };
-        </script>       
+        </script>        --}}
+
+
 
         <script>
             $(document).ready(function() {
@@ -315,6 +321,18 @@
             myDiv.onclick = function() {
             window.scrollTo({top: 0, behavior: 'smooth'}); // Scroll to top
             };
+        </script>
+
+        <script>
+           $('.dropify').dropify({
+                allowedFormats: ['image/jpeg', 'image/png'],
+                messages: {
+                    'default': 'Drag and drop a file here or click',
+                    'replace': 'Drag and drop or click to replace',
+                    'remove':  'Remove',
+                    'error':   'Ooops, something wrong happened.'
+                }
+                });
         </script>
 
 </body>

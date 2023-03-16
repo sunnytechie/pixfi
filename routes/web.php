@@ -25,7 +25,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/search', [DashboardController::class, 'search'])->name('search');
 
-//Route::post('/upload', [ImageController::class, 'upload'])->name('image.store')->middleware('auth', 'verified');
+//Route::post('/upload', [ImageController::class, 'upload'])->name('post.image.store')->middleware('auth', 'verified');
 //Route::post('/upload/delete', [ImageController::class, 'delete'])->name('image.destroy')->middleware('auth', 'verified');
 
 //Upload images using dropzone
@@ -35,7 +35,8 @@ Route::post('post/upload/store', [PostController::class, 'postStore'])->name('po
 //Route::get('image/upload', [ImageController::class, 'dropzoneUpload'])->name('dropzone.image.create')->middleware('auth', 'verified');
 Route::get('/image/{id}', [ImageController::class, 'show'])->name('image.show');
 Route::get('/upload/{post}', [ImageController::class, 'create'])->name('image.create')->middleware('auth', 'verifiedByAdmin');
-Route::post('image/upload/store', [ImageController::class, 'dropzoneUploadStore'])->name('dropzone.image.store')->middleware('auth', 'verifiedByAdmin');
+Route::post('image/upload/store', [ImageController::class, 'store'])->name('image.store')->middleware('auth', 'verifiedByAdmin');
+Route::delete('picture/destroy/{id}', [ImageController::class, 'destroy'])->name('destroy.picture')->middleware('auth', 'verifiedByAdmin');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

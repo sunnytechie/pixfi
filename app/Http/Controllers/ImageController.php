@@ -15,11 +15,22 @@ class ImageController extends Controller
 {
     public function create($post) {
         $post = Post::find($post);
-        return view('image.new', compact('post'));
+        $posts = Post::orderBy('id', 'desc')
+                ->where('id', $post->id)
+                ->with('pictures')
+                ->get();
+
+        //dd($posts);
+        return view('image.new', compact('post', 'posts'));
     }
 
-    public function dropzoneUploadStore(Request $request) {
-        $image = $request->file('file');
+    public function store(Request $request) {
+        //dd($request->all());
+        request()->validate([
+            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:50048'
+        ]);
+
+        $image = $request->file('file');        
 
         //Saving to public folder
         //$imageName = $image->getClientOriginalName();
@@ -37,7 +48,8 @@ class ImageController extends Controller
         $imageUpload->post_id = $request->post_id;
         $imageUpload->picture = $imageName;
         $imageUpload->save();
-        return response()->json(['success'=>$imageName]);
+
+        return redirect()->back()->with('message', 'Your file has been uploaded successfully, thank you.');
     }
 
     public function show($id) {
@@ -45,6 +57,13 @@ class ImageController extends Controller
         $post = Post::find($image->post_id);
         //dd($post);
         return view('image.show', compact('post', 'image'));
+    }
+
+    public function destroy($id) {
+        $picture = Picture::find($id);
+        $picture->delete();
+
+        return redirect()->route('index');
     }
 
 }

@@ -7,7 +7,7 @@
             <div class="col-md-12 mt-5">
                   <div class="grid">
                     @foreach ($images as $image)
-                      <div class="grid-item"><a href="{{ route('image.show', $image->id) }}"><img src="/images/{{ $image->picture }}"></a></div>
+                      <div class="grid-item"><a href="{{ route('image.show', $image->id) }}"><img src="/storage/{{ $image->picture }}"></a></div>
                     @endforeach
                   </div>
                   <div class="d-flex justify-content-center my-5">
